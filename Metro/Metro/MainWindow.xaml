@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Metro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="625" Loaded="Window_Loaded">
+        Title="MainWindow" Height="600" Width="625" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Window.Resources>
         <PathGeometry x:Key="MetroPath">
         </PathGeometry>
