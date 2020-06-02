@@ -55,6 +55,8 @@ namespace Metro
         public Edge[] Edges { get; private set; }
         public Node StartPoint { get; private set; }
 
+        public int STEPS { get; set; } = 0;
+
         public Dijkstra(Node[] ns, Edge[] eds)
         {
             Nodes = ns;
@@ -143,6 +145,7 @@ namespace Metro
 
             while (temp != this.StartPoint)
             {
+                STEPS++;
                 path.Add(temp);
                 temp = temp.Ancestor;
             }

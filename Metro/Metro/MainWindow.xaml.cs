@@ -13,8 +13,6 @@ namespace Metro
     /// </summary>
     public partial class MainWindow : Window
     {
-        StreamReader reader = new StreamReader("Points.txt");
-
         Dictionary<string, Node> stationsdict = new Dictionary<string, Node>();
         List<Node> stations = new List<Node>();
         List<Edge> edges = new List<Edge>();
@@ -23,9 +21,9 @@ namespace Metro
         { 
             InitializeComponent();
             //MouseMove += OnMouseMove;
-            Closed += (object sender, EventArgs e) => { reader.Close();
+            //Closed += (object sender, EventArgs e) => { reader.Close();
                 //writer.Close();
-            };
+            //};
            // MouseDown += OnMouseDown;
         }
 
@@ -52,11 +50,18 @@ namespace Metro
             var stats = stations.ToArray();
             var edgs = edges.ToArray();
 
+            var start = DateTime.Now;
             Dijkstra findway = new Dijkstra(stats, edgs);
             stationsdict[Start.Text].Value = 0;
             findway.RunAlgorithm(stationsdict[Start.Text]);
 
             List<Node> MyWay = findway.MinAlgorithm(stationsdict[Destination.Text]);
+
+            var end = DateTime.Now;
+            var diff = end - start;
+
+            MessageBox.Show($"Elapsed time: {diff}\n Steps taken: {findway.STEPS}");
+
             IEnumerable<Point> Points = from ps in MyWay select ps.SPoint;
 
             PathFigure geometry = new PathFigure();
@@ -66,28 +71,39 @@ namespace Metro
             PathGeometry path = FindResource("MetroPath") as PathGeometry;
             path.Figures.Add(geometry);
 
-            Storyboard story = this.FindResource("MetroAnim") as Storyboard;
+            Storyboard story = FindResource("MetroAnim") as Storyboard;
             story.Begin();
         }
 
-        private void ReadPoints()
+        private void ReadPoints()    // тут повинен бути .json, але я вже мав готові .txt файли)
         {
-            while (reader.Peek() != -1)
+            using (StreamReader reader = new StreamReader("Points.txt")) 
             {
-                int x = Convert.ToInt32(reader.ReadLine());
-                int y = Convert.ToInt32(reader.ReadLine());
+                while (reader.Peek() != -1)
+                {
+                    int x = Convert.ToInt32(reader.ReadLine());
+                    int y = Convert.ToInt32(reader.ReadLine());
 
-                stations.Add(new Node(999,new Point(x,y)));
+                    stations.Add(new Node(999, new Point(x, y)));
+                }
             }
-            StreamReader reader2 = new StreamReader("StLines.txt");
-            int count = 0;
-            while (reader2.Peek() != -1)
+
+            using (StreamReader reader2 = new StreamReader("StLines.txt"))
             {
-                string stname = reader2.ReadLine();
-                stations[count].Name = stname;
-                stationsdict.Add(stname, stations[count]);
-                count++;
+                int count = 0;
+                while (reader2.Peek() != -1)
+                {
+                    string stname = reader2.ReadLine();
+                    stations[count].Name = stname;
+                    stationsdict.Add(stname, stations[count]);
+                    count++;
+                }
             }
+
+            Start.ItemsSource = stations;
+            Start.DisplayMemberPath = "Name";
+            Destination.ItemsSource = stations;
+            Destination.DisplayMemberPath = "Name";
         }
 
         private void CreateEdges(ref List<Edge> edges)

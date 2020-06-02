@@ -12,14 +12,14 @@
 
         <Storyboard x:Key="MetroAnim">
                 <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)"
-                                          Storyboard.TargetName="Skull"
+                                          Storyboard.TargetName="Pacman"
                                           PathGeometry="{StaticResource MetroPath}"
                                           Duration="0:0:10" RepeatBehavior="Forever"
                                           Source="X">
                     
                 </DoubleAnimationUsingPath>
             <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)"
-                                          Storyboard.TargetName="Skull"
+                                          Storyboard.TargetName="Pacman"
                                           PathGeometry="{StaticResource MetroPath}"
                                           Duration="0:0:10" RepeatBehavior="Forever"
                                           Source="Y">
@@ -33,7 +33,7 @@
         </Grid.RowDefinitions>
         <Canvas>
             <Image Source="map.jpg" Height="500"></Image>
-            <Image Name="Skull" Source="personal.png" Height="40"></Image>
+            <Image Name="Pacman" Source="pacman.png" Height="40"></Image>
         </Canvas>
         <Grid Grid.Row="1" MinHeight="60">
             <Grid.ColumnDefinitions>
@@ -41,8 +41,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Name="Start" Margin="5" Grid.Column="0"></TextBox>
-            <TextBox Name="Destination" Margin="5" Grid.Column="1"></TextBox>
+            <ComboBox Name="Start" Margin="5" Grid.Column="0"></ComboBox>
+            <ComboBox Name="Destination" Margin="5" Grid.Column="1"></ComboBox>
             <Button Grid.Column="2" Name="Route" Margin="5" Click="Route_Click">GET ROUTE</Button>
         </Grid>
     </Grid>

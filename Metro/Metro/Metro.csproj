@@ -98,10 +98,10 @@
     <Resource Include="map.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="skull.png" />
+    <Resource Include="personal.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="personal.png" />
+    <Resource Include="pacman.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
